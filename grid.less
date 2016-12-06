@@ -1,0 +1,44 @@
+/* GRID-system
+================================================================================*/
+
+@columns: 12;
+@gutter: 30px;
+
+
+.grid-row {
+	display: flex;
+	justify-content: center;
+	margin-left: -(@gutter/2);
+	margin-right: -(@gutter/2);
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.grid-item {
+	padding-left: @gutter/2;
+	padding-right: @gutter/2;
+	min-height: 1px;
+	width: calc(~'100% / @{columns}');
+	flex-grow: 1;
+	&--top {
+		align-items: flex-start;
+		display: flex;
+	}
+	&--middle {
+		align-items: center;
+		display: flex;
+	}
+	&--bottom {
+		align-items: flex-end;
+		display: flex;
+	}
+}
+
+.mixin-loop (@i) when (@i > 0) {
+	.grid-item--@{i} {
+		width: percentage(@i/@columns);
+	}
+	.mixin-loop(@i - 1);
+}
+
+.mixin-loop(@columns);
